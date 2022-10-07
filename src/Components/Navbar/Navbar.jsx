@@ -25,12 +25,12 @@ const Navbar = () => {
               Search
             </li>
           </Link>
-          <Link to="/">
+          <Link to="/" >
             <li className="ml-10 text-lg uppercase font-serif font-bold text-[#C21010] hover:border-b-4 border-[#fff] cursor-pointer ">
               Movie
             </li>
           </Link>
-          <Link to="/">
+          <Link to="/TvListGeneral" >
             <li className="ml-10 text-lg uppercase font-serif font-bold text-[#C21010] hover:border-b-4 border-[#fff] cursor-pointer">
               Tv
             </li>

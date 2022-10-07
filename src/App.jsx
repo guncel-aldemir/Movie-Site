@@ -11,46 +11,59 @@ import Animation from "./Pages/Animation";
 import Comedy from "./Pages/Comedy";
 import Fantasy from "./Pages/Fantasy";
 import ScienceFinction from "./Pages/ScienceFinction";
+
+
+import TvListGeneral from "./Components/TvList/TvListGeneral";
+
 function App() {
   const URL = "https://api.themoviedb.org/3";
-  const [movie, setMovie] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [tv, setTv] = useState([]);
   const [search,setSearch] = useState("");
- 
-  const [cat,setCat] = useState([]);
+  const [searchTv,setSearchTv] = useState("");
+  const [open,setOpen] = useState(false);
+  const[openModal,setOpenModal]=useState(false)
+  const[modalData,setModalData]=useState(null)
+  const[selectedMovie,setSelectedMovie]=useState({})
+  const [list,setList]=useState({})
+  const [tvList,setTvList]=useState({})
+  const [searchArray,setSearchArray] = useState([])
+  const [videos, setVideos] = useState("");
   const fetchMovies = async () => {
     const data = await axios(
-      `${URL}/discover/movie?api_key=28f5c7cf8dad0f5aa725c0f4951949ba&with_genres`
+      `${URL}/discover/movie/?api_key=28f5c7cf8dad0f5aa725c0f4951949ba&with_genres`
     ).then((response) => response.data.results);
-    setMovie(data);
+    setMovies(data);
+  
+
   };
+
+  
   const fetchTv = async () => {
     const data = await axios(
       `${URL}/discover/tv?api_key=28f5c7cf8dad0f5aa725c0f4951949ba&with_genres`
     ).then((response) => response.data.results);
     setTv(data);
   };
-  // const deneme = async () => {
-  //   const data = await axios(
-  //     `${URL}/genre/movie/list?api_key=28f5c7cf8dad0f5aa725c0f4951949ba`
-  //   ).then((response) => response.data.genres);
-  //   setCategories(data)
-  //   console.log("deneme data ", data);
-  // };
+
+
   useEffect(() => {
     fetchMovies();
     fetchTv();
-    // deneme();
+   
   }, []);
  
-  const contextData = { movie, tv,search,setSearch,cat,setCat};
-  console.log("movie", movie);
-  console.log("tv", tv);
+  const contextData = { movies, tv,search,setSearch,open,setOpen,searchTv,setSearchTv,openModal,setOpenModal,modalData,setModalData,selectedMovie,setSelectedMovie,list,setList,tvList,setTvList,searchArray,setSearchArray,videos, setVideos};
+  // console.log("movies", movies);
+  // console.log("tv", tv);
+
+
   return (
     <MovieContext.Provider value={contextData}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/TvListGeneral" element={<TvListGeneral />} />
           <Route path="/search" element={<Search />} />
           <Route path="/action" element={<Action />} />
           <Route path="/adventure" element={<Adventure />} />
@@ -58,6 +71,7 @@ function App() {
           <Route path="/comedy" element={<Comedy />} />
           <Route path="/fantasy" element={<Fantasy />} />
           <Route path="/sciencefinction" element={<ScienceFinction />} />
+          
         </Routes>
       </BrowserRouter>
     </MovieContext.Provider>
